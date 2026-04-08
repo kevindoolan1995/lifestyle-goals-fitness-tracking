@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BUILT — Kevin's Muscle System</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
   :root {
     --black: #0a0a0a;
@@ -278,7 +279,7 @@
   }
   .callout strong { color: var(--accent); }
 
-  .progrest-wrap { margin: 8px 0; }
+  .progress-wrap { margin: 8px 0; }
   .progress-label {
     display: flex;
     justify-content: space-between;
@@ -339,6 +340,64 @@
     padding-bottom: 6px;
     border-bottom: 1px solid rgba(255,107,53,0.3);
   }
+
+  /* ===== LOG WORKOUT ===== */
+  .session-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+  .session-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; }
+  .btn { background: var(--accent); color: var(--black); border: none; padding: 10px 24px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; border-radius: 2px; cursor: pointer; transition: opacity 0.2s; }
+  .btn:hover { opacity: 0.85; }
+  .btn-green { background: var(--green); color: var(--black); }
+
+  .exercise-logger { margin-bottom: 4px; }
+  .ex-logger-name { font-weight: 600; font-size: 16px; margin-bottom: 2px; }
+  .ex-logger-last { font-size: 11px; color: var(--muted); margin-bottom: 10px; font-family: 'Space Mono', monospace; }
+  .set-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 8px; }
+  .set-table th { padding: 6px 8px; text-align: left; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--accent); text-transform: uppercase; border-bottom: 1px solid var(--accent); font-weight: 400; }
+  .set-table td { padding: 5px 4px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .set-table input[type=number] { background: var(--dark); border: 1px solid var(--border); color: var(--white); padding: 5px 8px; border-radius: 2px; width: 70px; font-family: 'DM Sans', sans-serif; font-size: 13px; }
+  .set-table input[type=number]:focus { outline: none; border-color: var(--accent); }
+  .set-num { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); width: 28px; }
+  .add-set-btn { background: transparent; border: 1px dashed var(--border); color: var(--muted); padding: 5px 12px; border-radius: 2px; cursor: pointer; font-size: 12px; font-family: 'Space Mono', monospace; transition: all 0.2s; }
+  .add-set-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .delete-set-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 14px; padding: 0 4px; transition: color 0.15s; }
+  .delete-set-btn:hover { color: var(--red); }
+
+  /* ===== PROGRESS ===== */
+  .chart-container { position: relative; height: 220px; margin: 16px 0; }
+  .input-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+  .input-row input, .input-row select { background: var(--dark); border: 1px solid var(--border); color: var(--white); padding: 8px 12px; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 14px; }
+  .input-row input[type=number] { width: 110px; }
+  .input-row input[type=date] { width: 150px; }
+  .input-row select { min-width: 200px; }
+  .input-row input:focus, .input-row select:focus { outline: none; border-color: var(--accent); }
+  .streak-blocks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  /* ===== CALENDAR ===== */
+  .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .cal-nav-btn { background: var(--dark); border: 1px solid var(--border); color: var(--white); padding: 6px 16px; border-radius: 2px; cursor: pointer; font-size: 20px; line-height: 1; transition: border-color 0.2s; }
+  .cal-nav-btn:hover { border-color: var(--accent); }
+  .cal-month-label { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .cal-dow { text-align: center; font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted); padding: 4px 2px 8px; letter-spacing: 1px; }
+  .cal-day { background: var(--dark); border: 1px solid var(--border); border-radius: 2px; padding: 6px 4px; min-height: 58px; cursor: pointer; transition: border-color 0.2s; position: relative; }
+  .cal-day:hover { border-color: var(--accent); }
+  .cal-day.empty { background: transparent; border-color: transparent; cursor: default; pointer-events: none; }
+  .cal-day.today { border-color: var(--accent); }
+  .cal-day-num { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 3px; }
+  .cal-day.today .cal-day-num { color: var(--accent); font-weight: 700; }
+  .cal-day-badge { font-size: 8px; padding: 1px 4px; border-radius: 1px; font-family: 'Space Mono', monospace; letter-spacing: 0.5px; text-transform: uppercase; display: inline-block; margin-bottom: 2px; }
+  .cal-logged { font-size: 14px; text-align: center; line-height: 1; }
+  .cal-missed { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,59,48,0.5); position: absolute; top: 4px; right: 4px; }
+  .cal-detail-panel { background: var(--dark); border: 1px solid var(--border); border-radius: 4px; padding: 16px; margin-top: 12px; display: none; }
+  .cal-detail-panel.show { display: block; }
+
+  @media(max-width: 700px) {
+    .streak-blocks { grid-template-columns: 1fr; }
+    .cal-day { min-height: 44px; padding: 4px 2px; }
+    .cal-day-badge { display: none; }
+    .set-table input[type=number] { width: 55px; }
+    .input-row select { min-width: 160px; }
+  }
 </style>
 </head>
 <body>
@@ -358,6 +417,9 @@
   <button class="tab" onclick="showTab('nutrition', event)">Nutrition</button>
   <button class="tab" onclick="showTab('daily', event)">Today's Checklist</button>
   <button class="tab" onclick="showTab('rules', event)">The Rules</button>
+  <button class="tab" onclick="showTab('logworkout', event)">Log Workout</button>
+  <button class="tab" onclick="showTab('progress', event)">Progress</button>
+  <button class="tab" onclick="showTab('calendar', event)">Calendar</button>
 </nav>
 
 <main>
@@ -435,7 +497,7 @@
       <div class="card-title"><span class="icon">📅</span> Tuesday — Pull Day (Back + Biceps)</div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">4:45 AM</div><div class="day-type">Alarm — whey shake immediately</div></div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">5:15 AM</div><div class="day-type">Coffee + drive to gym</div></div>
-      <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">5:45 AM</div><div class="day-type" style="color:var(--accent2);font-weight:600">🏋️ TRAIN — Pull (Back & Biceps)</div></div>
+      <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">5:45 AM </div><div class="day-type" style="color:var(--accent2);font-weight:600">🏋️ TRAIN — Pull (Back & Biceps)</div></div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">7:15 AM</div><div class="day-type">Breakfast: Eggs + oats + banana</div></div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">12:00 PM</div><div class="day-type">Lunch: Salmon + sweet potato + spinach (prepped)</div></div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">3:30 PM</div><div class="day-type">Afternoon shake + fruit</div></div>
@@ -460,18 +522,18 @@
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">20 min walk</div><div class="day-type" style="color:var(--muted)">Outside, easy pace. Blood flow, not cardio.</div></div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">Sleep extra</div><div class="day-type" style="color:var(--muted)">8–9 hrs. This is when you actually grow.</div></div>
     </div>
-  </div>
+  
 
   <div class="section" id="workouts">
     <div class="section-title">THE WORKOUTS</div>
-    <div class="section-sub">PPL twice over. 5 days. 60–75 min max. Add weight every week.</div>
+    <div class="section-sub">PPL twice over. 5 days. 64–75 min max. Add weight every week.</div>
     <div class="callout"><strong>The only rule that matters:</strong> Add weight or reps every single session. If you did 185 lbs for 8 reps last Monday, do 190 lbs or 9 reps this Monday. Every week. That's progressive overload. That's how you get massive.</div>
 
     <div class="card">
       <div class="card-title"><span class="icon">💪</span> Monday — Push A (Chest & Shoulders Focus)</div>
-      <div class="workout-section-head">COMPOUND FOUNDATION</div>
+      <div class="workout-section-head">COMPOUND FounDATION</div>
       <table>
-        <thead><tr><th>Exercise</th><th>Sets × Reps</th><th>Rest</th><th>Notes</th></tr></thead>
+        <thead><tr><th>Exercise</th><th>Sets × Reps</th><th>Rest</th><th>Notes</oh></tr></thead>
         <tbody>
           <tr><td><div class="ex-name">Barbell Bench Press</div><div class="ex-detail">Flat — main strength lift</div></td><td><span class="sets-badge">4 × 5–6</span></td><td>3 min</td><td>Heavy. Track weight every week.</td></tr>
           <tr><td><div class="ex-name">Incline DB Press</div><div class="ex-detail">30–45° angle</div></td><td><span class="sets-badge">4 × 8–10</span></td><td>90 sec</td><td>Upper chest focus</td></tr>
@@ -491,19 +553,11 @@
 
     <div class="card">
       <div class="card-title" style="color:var(--accent2)"><span class="icon">🦾</span> Tuesday — Pull A (Back & Biceps Focus)</div>
-      <div class="workout-section-head">COMPOUND FOUNDATION</div>
+      <div class="workout-section-head">COMPOUND FounDATION</div>
       <table>
         <tbody>
           <tr><td><div class="ex-name">Weighted Pull-Ups</div><div class="ex-detail">Or lat pulldown if needed</div></td><td><span class="sets-badge">4 × 6–8</span></td><td>3 min</td><td>Add weight belt when 8 reps is easy</td></tr>
-          <tr><td><div class="ex-name">Barbell Rows</div><div class="ex-detail">Pendlay or bent-over</div></td><td><span class="sets-badge">4 × 6–8</span></td><td>2 min</td><td>Pull to belly button</td></tr>
-          <tr><td><div class="ex-name">Seated Cable Row</div></td><td><span class="sets-badge">3 × 10–12</span></td><td>90 sec</td><td>Retract scapula</td></tr>
-        </tbody>
-      </table>
-      <div class="workout-section-head">ISOLATION / VOLUME</div>
-      <table>
-        <tbody>
-          <tr><td><div class="ex-name">Single-Arm DB Row</div></td><td><span class="sets-badge">3 × 10–12</span></td><td>60 sec</td><td>Full stretch & squeeze</td></tr>
-          <tr><td><div class="ex-name">Barbell Curls</div></td><td><span class="sets-badge">4 × 8–10</span></td><td>90 sec</td><td>No swinging</td></tr>
+          <tr><td><div class="ex-name">Barbell Rows</div><div class="ex-detail">Pendlay or bent-over</td>90 sec</td><td>No swinging</td></tr>
           <tr><td><div class="ex-name">Hammer Curls</div></td><td><span class="sets-badge">3 × 10–12</span></td><td>60 sec</td><td>Brachialis builder</td></tr>
           <tr><td><div class="ex-name">Face Pulls</div></td><td><span class="sets-badge">3 × 15</span></td><td>60 sec</td><td>Rear delt health</td></tr>
         </tbody>
@@ -575,7 +629,7 @@
 
     <div class="card">
       <div class="card-title"><span class="icon">🍳</span> Full Daily Meal Plan</div>
-      <div class="meal-block"><div class="meal-time">4:45 AM</div><div class="meal-content"><div class="meal-name">Wake-Up Protein Shake</div><div class="meal-items">40g whey protein + 16oz water.</div><div class="meal-macros"><span class="macro-pill p">P: 40g</span><span class="macro-pill c">C: 3g</span><span class="macro-pill f">F: 2g</span></div></div></div>
+      <div class="meal-block"><div class="meal-time">4:45 AM</div><div class="meal-content"><div class="meal-name">Wake-Up Protein Shake</div><div class="meal-items">40g whey protein + 16oz Water.</div><div class="meal-macros"><span class="macro-pill p">P: 40g</span><span class="macro-pill c">C: 3g</span><span class="macro-pill f">F: 2g</span></div></div></div>
       <div class="meal-block"><div class="meal-time">7:30 AM</div><div class="meal-content"><div class="meal-name">Post-Workout Breakfast</div><div class="meal-items">5 whole eggs + 1 cup dry oats + 1 banana + black coffee.</div><div class="meal-macros"><span class="macro-pill p">P: 35g</span><span class="macro-pill c">C: 85g</span><span class="macro-pill f">F: 22g</span></div></div></div>
       <div class="meal-block"><div class="meal-time">12:00 PM</div><div class="meal-content"><div class="meal-name">Lunch (Prepped Sunday)</div><div class="meal-items">6oz chicken breast + 2 cups cooked white rice + 1 cup broccoli + olive oil</div><div class="meal-macros"><span class="macro-pill p">P: 45g</span><span class="macro-pill c">C: 90g</span><span class="macro-pill f">F: 8g</span></div></div></div>
       <div class="meal-block"><div class="meal-time">3:30 PM</div><div class="meal-content"><div class="meal-name">Afternoon Shake + Snack</div><div class="meal-items">40g whey + 4 rice cakes with peanut butter + 1 apple</div><div class="meal-macros"><span class="macro-pill p">P: 35g</span><span class="macro-pill c">C: 60g</span><span class="macro-pill f">F: 10g</span></div></div></div>
@@ -679,9 +733,87 @@
     <div class="callout"><strong>After 12 weeks:</strong> Take progress photos. Reassess. Potentially run a 4-week cut to reveal the mass. Then repeat the bulk cycle.</div>
   </div>
 
+
+  <!-- ===== LOG WORKOUT ===== -->
+  <div class="section" id="logworkout">
+    <div class="section-title">LOG WORKOUT</div>
+    <div class="section-sub">Track every set. Beat last week's numbers.</div>
+
+    <div class="card" id="log-session-header">
+      <div style="color:var(--muted);font-size:14px">Loading today's workout...</div>
+    </div>
+
+    <div id="log-exercises-container"></div>
+
+    <div id="log-complete-area" style="display:none;margin-top:8px;">
+      <button class="btn" style="width:100%;font-size:22px;padding:16px;" onclick="completeWorkout()">✓ COMPLETE WORKOUT</button>
+    </div>
+  </div>
+
+  <!-- ===== PROGRESS ===== -->
+  <div class="section" id="progress">
+    <div class="section-title">PROGRESS</div>
+    <div class="section-sub">Track body weight and strength gains over time.</div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🔥</span> Workout Streak</div>
+      <div class="streak-blocks">
+        <div class="stat-block"><div class="stat-num" id="streak-count">—</div><div class="stat-label">Day Streak</div></div>
+        <div class="stat-block"><div class="stat-num" id="total-workouts">—</div><div class="stat-label">Total Workouts</div></div>
+        <div class="stat-block"><div class="stat-num" id="days-since-start">—</div><div class="stat-label">Days Since Start</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">⚖️</span> Body Weight Tracker</div>
+      <div class="input-row">
+        <input type="number" id="weight-input" placeholder="Weight (lbs)" step="0.1" min="50" max="500">
+        <input type="date" id="weight-date">
+        <button class="btn" onclick="saveWeight()">Save</button>
+      </div>
+      <div class="chart-container"><canvas id="weightChart"></canvas></div>
+      <div id="weight-history-table"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📈</span> Strength Progress</div>
+      <div class="input-row">
+        <select id="strength-exercise-select" onchange="renderStrengthChart()"></select>
+      </div>
+      <div class="chart-container"><canvas id="strengthChart"></canvas></div>
+      <div id="strength-empty-msg" style="color:var(--muted);font-size:13px;text-align:center;padding:8px 0;display:none;">No logged data yet for this exercise.</div>
+    </div>
+  </div>
+
+  <!-- ===== CALENDAR ===== -->
+  <div class="section" id="calendar">
+    <div class="section-title">CALENDAR</div>
+    <div class="section-sub">Your training history at a glance. Click a day for details.</div>
+
+    <div class="card">
+      <div class="cal-header">
+        <button class="cal-nav-btn" onclick="calNav(-1)">&#8249;</button>
+        <div class="cal-month-label" id="cal-month-label"></div>
+        <button class="cal-nav-btn" onclick="calNav(1)">&#8250;</button>
+      </div>
+      <div class="cal-grid" style="margin-bottom:4px;">
+        <div class="cal-dow">SUN</div>
+        <div class="cal-dow">MON</div>
+        <div class="cal-dow">TUE</div>
+        <div class="cal-dow">WED</div>
+        <div class="cal-dow">THU</div>
+        <div class="cal-dow">FRI</div>
+        <div class="cal-dow">SAT</div>
+      </div>
+      <div class="cal-grid" id="cal-days-grid"></div>
+      <div class="cal-detail-panel" id="cal-detail-panel"></div>
+    </div>
+  </div>
+
 </main>
 
 <script>
+  // ===== CORE =====
   const days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
   document.getElementById('currentDay').textContent = days[new Date().getDay()];
 
@@ -690,6 +822,9 @@
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     event.target.classList.add('active');
+    if (id === 'logworkout') initLogWorkout();
+    if (id === 'progress') initProgress();
+    if (id === 'calendar') initCalendar();
   }
 
   function toggleCheck(el) {
@@ -702,6 +837,375 @@
     const all = document.querySelectorAll('.checklist-item');
     const done = document.querySelectorAll('.checklist-item.done');
     document.getElementById('completion-banner').style.display = (all.length > 0 && all.length === done.length) ? 'block' : 'none';
+  }
+
+  // ===== WORKOUT DATA =====
+  const WORKOUTS = {
+    0: { name: 'Rest/Prep', type: 'rest', exercises: [] },
+    1: { name: 'Push A', type: 'push', exercises: ['Barbell Bench Press','Incline DB Press','Seated DB Shoulder Press','Cable Lateral Raises','Cable Chest Flyes','Tricep Pushdowns (Rope)','Overhead Tricep Extension'] },
+    2: { name: 'Pull A', type: 'pull', exercises: ['Weighted Pull-Ups','Barbell Rows','Seated Cable Row','Single-Arm DB Row','Barbell Curls','Hammer Curls','Face Pulls'] },
+    3: { name: 'Legs', type: 'legs', exercises: ['Barbell Back Squat','Romanian Deadlift','Leg Press','Leg Extension','Leg Curl (Machine)','Standing Calf Raises'] },
+    4: { name: 'Rest', type: 'rest', exercises: [] },
+    5: { name: 'Push B', type: 'push', exercises: ['Incline Barbell Press','Flat DB Press','Machine Chest Press','Lateral Raises (Dumbbells)','Close Grip Bench Press','Skull Crushers','Cable Lateral Raises'] },
+    6: { name: 'Pull B', type: 'pull', exercises: ['Lat Pulldown (Wide Grip)','T-Bar Row or Machine Row','Straight-Arm Pulldown','Incline DB Curl','Cable Curl (Rope)','Rear Delt Flyes','Forearm Curls / Wrist Roller'] }
+  };
+
+  const ALL_EXERCISES = [...new Set(Object.values(WORKOUTS).flatMap(w => w.exercises))];
+
+  function todayStr() { return new Date().toISOString().split('T')[0]; }
+  function getLogs() { return JSON.parse(localStorage.getItem('built_workouts') || '[]'); }
+  function saveLogs(logs) { localStorage.setItem('built_workouts', JSON.stringify(logs)); }
+
+  // ===== LOG WORKOUT =====
+  let sessionStarted = false;
+
+  function initLogWorkout() {
+    sessionStarted = false;
+    const dow = new Date().getDay();
+    const workout = WORKOUTS[dow];
+    const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const typeClass = { push: 'badge-push', pull: 'badge-pull', legs: 'badge-legs', rest: 'badge-rest' }[workout.type] || 'badge-rest';
+
+    const header = document.getElementById('log-session-header');
+    header.innerHTML = `
+      <div class="session-header">
+        <div>
+          <div style="font-size:11px;color:var(--muted);font-family:'Space Mono',monospace;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">${dayNames[dow]}</div>
+          <div class="session-title">${workout.name}</div>
+          <div style="margin-top:8px"><span class="day-badge-small ${typeClass}">${workout.type === 'rest' ? 'REST' : workout.type.toUpperCase()}</span></div>
+        </div>
+        ${workout.type !== 'rest' ? `<button class="btn" id="start-btn" onclick="startSession()">&#9654; START SESSION</button>` : `<div style="color:var(--muted);font-size:14px;padding:8px 0">Rest day — recover and eat well.</div>`}
+      </div>
+      ${workout.type !== 'rest' ? `<div style="font-size:13px;color:var(--muted)">Hit Start Session, then log each set as you go. Previous session shown in grey — beat those numbers.</div>` : ''}
+    `;
+
+    const container = document.getElementById('log-exercises-container');
+    container.innerHTML = '';
+    document.getElementById('log-complete-area').style.display = 'none';
+
+    if (workout.type !== 'rest') {
+      workout.exercises.forEach((exName, idx) => renderExerciseCard(exName, idx));
+    }
+  }
+
+  function getLastSessionSets(exName) {
+    const logs = getLogs();
+    for (let i = logs.length - 1; i >= 0; i--) {
+      const ex = (logs[i].exercises || []).find(e => e.name === exName);
+      if (ex && ex.sets && ex.sets.length > 0) return ex.sets;
+    }
+    return null;
+  }
+
+  function renderExerciseCard(exName, idx) {
+    const lastSets = getLastSessionSets(exName);
+    let lastText = lastSets
+      ? 'Last: ' + lastSets.map(s => `${s.weight}×${s.reps}`).join(' · ')
+      : 'No previous data';
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.exIdx = idx;
+    card.innerHTML = `
+      <div class="exercise-logger">
+        <div class="ex-logger-name">${exName}</div>
+        <div class="ex-logger-last">${lastText}</div>
+        <table class="set-table">
+          <thead><tr><th style="width:28px">Set</th><th>Weight (lbs)</th><th>Reps</th><th></th></tr></thead>
+          <tbody id="sets-${idx}"></tbody>
+        </table>
+        <button class="add-set-btn" onclick="addSet(${idx})">+ Add Set</button>
+      </div>
+    `;
+    document.getElementById('log-exercises-container').appendChild(card);
+
+    // Pre-populate sets from last session (as hints)
+    const count = lastSets ? lastSets.length : 1;
+    for (let s = 0; s < count; s++) addSet(idx, lastSets ? lastSets[s] : null);
+  }
+
+  function addSet(exIdx, prefill) {
+    const tbody = document.getElementById('sets-' + exIdx);
+    if (!tbody) return;
+    const setNum = tbody.rows.length + 1;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="set-num">${setNum}</td>
+      <td><input type="number" placeholder="${prefill ? prefill.weight : '135'}" min="0" max="1500" step="2.5"></td>
+      <td><input type="number" placeholder="${prefill ? prefill.reps : '8'}" min="0" max="100"></td>
+      <td><button class="delete-set-btn" onclick="deleteSet(this)">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  function deleteSet(btn) {
+    const tr = btn.closest('tr');
+    const tbody = tr.parentElement;
+    tr.remove();
+    Array.from(tbody.rows).forEach((r, i) => { r.cells[0].textContent = i + 1; });
+  }
+
+  function startSession() {
+    sessionStarted = true;
+    const btn = document.getElementById('start-btn');
+    if (btn) { btn.textContent = '● LOGGING'; btn.style.background = 'var(--green)'; }
+    const area = document.getElementById('log-complete-area');
+    area.style.display = 'block';
+    area.querySelector('button').className = 'btn btn-green';
+    area.querySelector('button').style.width = '100%';
+  }
+
+  function completeWorkout() {
+    const dow = new Date().getDay();
+    const workout = WORKOUTS[dow];
+    const exercises = [];
+
+    document.querySelectorAll('[data-ex-idx]').forEach(card => {
+      const idx = parseInt(card.dataset.exIdx);
+      const exName = workout.exercises[idx];
+      const tbody = document.getElementById('sets-' + idx);
+      const sets = [];
+      Array.from(tbody.rows).forEach(tr => {
+        const inputs = tr.querySelectorAll('input');
+        const w = parseFloat(inputs[0].value);
+        const r = parseInt(inputs[1].value);
+        if (!isNaN(w) && !isNaN(r) && r > 0) sets.push({ weight: w, reps: r });
+      });
+      if (sets.length > 0) exercises.push({ name: exName, sets });
+    });
+
+    const logs = getLogs();
+    logs.push({
+      date: todayStr(),
+      timestamp: Date.now(),
+      workoutName: workout.name,
+      workoutType: workout.type,
+      exercises
+    });
+    saveLogs(logs);
+
+    const totalSets = exercises.reduce((a, e) => a + e.sets.length, 0);
+    const area = document.getElementById('log-complete-area');
+    area.innerHTML = `
+      <div style="background:var(--accent);color:var(--black);padding:20px 24px;border-radius:4px;text-align:center">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:3px">SESSION COMPLETE ✓</div>
+        <div style="font-size:14px;margin-top:4px;font-weight:500">${workout.name} logged — ${exercises.length} exercises, ${totalSets} sets</div>
+      </div>
+    `;
+    area.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ===== PROGRESS =====
+  let weightChartInst = null;
+  let strengthChartInst = null;
+
+  function initProgress() {
+    document.getElementById('weight-date').value = todayStr();
+
+    const select = document.getElementById('strength-exercise-select');
+    select.innerHTML = ALL_EXERCISES.map(e => `<option value="${e}">${e}</option>`).join('');
+
+    renderWeightChart();
+    renderStrengthChart();
+    updateStreaks();
+  }
+
+  function saveWeight() {
+    const val = parseFloat(document.getElementById('weight-input').value);
+    const date = document.getElementById('weight-date').value;
+    if (!val || !date || val < 50 || val > 500) return;
+
+    const weights = JSON.parse(localStorage.getItem('built_weights') || '[]');
+    const filtered = weights.filter(w => w.date !== date);
+    filtered.push({ date, weight: val });
+    filtered.sort((a, b) => a.date.localeCompare(b.date));
+    localStorage.setItem('built_weights', JSON.stringify(filtered));
+    document.getElementById('weight-input').value = '';
+    renderWeightChart();
+  }
+
+  function renderWeightChart() {
+    const weights = JSON.parse(localStorage.getItem('built_weights') || '[]');
+    const last30 = weights.slice(-30);
+
+    // History table (last 10)
+    const tableDiv = document.getElementById('weight-history-table');
+    const last10 = weights.slice(-10).reverse();
+    if (last10.length > 0) {
+      tableDiv.innerHTML = `<table>
+        <thead><tr><th>Date</th><th>Weight (lbs)</th><th>Change</th></tr></thead>
+        <tbody>${last10.map((w, i) => {
+          const prev = last10[i + 1];
+          const diff = prev ? (w.weight - prev.weight).toFixed(1) : null;
+          const color = diff !== null ? (parseFloat(diff) > 0 ? 'var(--accent2)' : parseFloat(diff) < 0 ? 'var(--green)' : 'var(--muted)') : 'var(--muted)';
+          return `<tr><td>${w.date}</td><td>${w.weight}</td><td style="color:${color}">${diff !== null ? (parseFloat(diff) > 0 ? '+' : '') + diff : '—'}</td></tr>`;
+        }).join('')}</tbody>
+      </table>`;
+    } else {
+      tableDiv.innerHTML = '<div style="color:var(--muted);font-size:13px;text-align:center;padding:16px;">No weight entries yet. Log your first weigh-in above.</div>';
+    }
+
+    const ctx = document.getElementById('weightChart').getContext('2d');
+    if (weightChartInst) weightChartInst.destroy();
+    if (last30.length === 0) return;
+
+    weightChartInst = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: last30.map(w => w.date.slice(5)),
+        datasets: [{ label: 'Body Weight', data: last30.map(w => w.weight), borderColor: '#e8ff47', backgroundColor: 'rgba(232,255,71,0.07)', tension: 0.3, pointRadius: 4, pointBackgroundColor: '#e8ff47', fill: true }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { ticks: { color: '#888', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
+          y: { ticks: { color: '#888', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } }
+        }
+      }
+    });
+  }
+
+  function renderStrengthChart() {
+    const exName = document.getElementById('strength-exercise-select').value;
+    const logs = getLogs();
+    const dataPoints = [];
+    logs.forEach(session => {
+      const ex = (session.exercises || []).find(e => e.name === exName);
+      if (ex && ex.sets && ex.sets.length > 0) {
+        const maxW = Math.max(...ex.sets.map(s => s.weight || 0));
+        if (maxW > 0) dataPoints.push({ date: session.date, weight: maxW });
+      }
+    });
+
+    const ctx = document.getElementById('strengthChart').getContext('2d');
+    if (strengthChartInst) strengthChartInst.destroy();
+
+    const emptyMsg = document.getElementById('strength-empty-msg');
+    if (dataPoints.length === 0) { emptyMsg.style.display = 'block'; return; }
+    emptyMsg.style.display = 'none';
+
+    strengthChartInst = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: dataPoints.map(d => d.date.slice(5)),
+        datasets: [{ label: exName + ' — Max Weight', data: dataPoints.map(d => d.weight), borderColor: '#ff6b35', backgroundColor: 'rgba(255,107,53,0.07)', tension: 0.3, pointRadius: 5, pointBackgroundColor: '#ff6b35', fill: true }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { ticks: { color: '#888', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
+          y: { ticks: { color: '#888', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } }
+        }
+      }
+    });
+  }
+
+  function updateStreaks() {
+    const logs = getLogs();
+    const loggedDates = new Set(logs.map(l => l.date));
+    const total = loggedDates.size;
+
+    // Streak: consecutive scheduled workout days completed, going back from today/yesterday
+    let streak = 0;
+    let d = new Date();
+    const todayDate = todayStr();
+    let checked = new Set();
+    for (let i = 0; i < 180; i++) {
+      const ds = d.toISOString().split('T')[0];
+      const dow = d.getDay();
+      const isWorkoutDay = WORKOUTS[dow].type !== 'rest';
+      if (isWorkoutDay) {
+        if (loggedDates.has(ds)) { streak++; }
+        else if (ds === todayDate) { /* today not done yet, don't break */ }
+        else { break; }
+      }
+      d.setDate(d.getDate() - 1);
+    }
+
+    let daysSince = 0;
+    if (logs.length > 0) {
+      const first = new Date(logs[0].date + 'T12:00:00');
+      daysSince = Math.floor((Date.now() - first.getTime()) / 86400000);
+    }
+
+    document.getElementById('streak-count').textContent = streak;
+    document.getElementById('total-workouts').textContent = total;
+    document.getElementById('days-since-start').textContent = daysSince;
+  }
+
+  // ===== CALENDAR =====
+  let calYear = new Date().getFullYear();
+  let calMonth = new Date().getMonth();
+
+  function initCalendar() { renderCalendar(); }
+
+  function calNav(dir) {
+    calMonth += dir;
+    if (calMonth > 11) { calMonth = 0; calYear++; }
+    if (calMonth < 0) { calMonth = 11; calYear--; }
+    document.getElementById('cal-detail-panel').className = 'cal-detail-panel';
+    renderCalendar();
+  }
+
+  function renderCalendar() {
+    const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    document.getElementById('cal-month-label').textContent = MONTHS[calMonth] + ' ' + calYear;
+
+    const logs = getLogs();
+    const logMap = {};
+    logs.forEach(l => { if (!logMap[l.date]) logMap[l.date] = l; });
+
+    const today = todayStr();
+    const firstDow = new Date(calYear, calMonth, 1).getDay();
+    const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+    const grid = document.getElementById('cal-days-grid');
+    grid.innerHTML = '';
+
+    for (let i = 0; i < firstDow; i++) {
+      const e = document.createElement('div'); e.className = 'cal-day empty'; grid.appendChild(e);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const ds = calYear + '-' + String(calMonth + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+      const dow = new Date(calYear, calMonth, d).getDay();
+      const workout = WORKOUTS[dow];
+      const isToday = ds === today;
+      const isPast = ds < today;
+      const logged = logMap[ds];
+
+      const typeClass = { push: 'badge-push', pull: 'badge-pull', legs: 'badge-legs', rest: 'badge-rest' }[workout.type] || 'badge-rest';
+      const badgeLabel = workout.type === 'rest' ? 'REST' : workout.name;
+
+      let statusHtml = '';
+      if (logged) statusHtml = '<div class="cal-logged">✅</div>';
+      else if (isPast && workout.type !== 'rest') statusHtml = '<div class="cal-missed"></div>';
+
+      const cell = document.createElement('div');
+      cell.className = 'cal-day' + (isToday ? ' today' : '');
+      cell.innerHTML = `<div class="cal-day-num">${d}</div><span class="cal-day-badge ${typeClass}">${badgeLabel}</span>${statusHtml}`;
+      cell.onclick = () => showCalDetail(ds, logged, workout);
+      grid.appendChild(cell);
+    }
+  }
+
+  function showCalDetail(ds, logged, workout) {
+    const panel = document.getElementById('cal-detail-panel');
+    panel.className = 'cal-detail-panel show';
+    if (!logged) {
+      panel.innerHTML = `<div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:8px">${ds}</div><div style="font-size:14px;color:var(--muted)">${workout.type === 'rest' ? 'Rest day — lno workout scheduled.' : 'No workout logged for this day.'}</div>`;
+      return;
+    }
+    const exHtml = (logged.exercises || []).map(ex => {
+      const setsStr = ex.sets.map(s => s.weight + 'lb × ' + s.reps).join(' ·');
+      return `<div style="padding:8px 0;border-bottom:1px solid var(--border)"><div style="font-weight:600;margin-bottom:3px">${ex.name}</div><div style="font-size:12px;color:var(--muted)">${setsStr}</div></div>`;
+    }).join('');
+    panel.innerHTML = `
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:6px">${ds}</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;margin-bottom:12px;color:var(--accent)">${logged.workoutName} — LOGGED ✓</div>
+      ${exHtml || '<div style="color:var(--muted);font-size:13px">No set detail recorded.</div>'}
+    `;
   }
 </script>
 </body>
