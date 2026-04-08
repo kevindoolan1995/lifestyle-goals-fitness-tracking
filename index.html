@@ -18,88 +18,339 @@
     --red: #ff3b30;
     --green: #39d353;
   }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
-  header { border-bottom: 1px solid var(--border); padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); z-index: 100; }
-  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 4px; color: var(--accent); }
-  .tagline { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
-  .day-badge { background: var(--accent); color: var(--black); font-family: 'Bebas Neue', sans-serif; font-size: 18px; padding: 6px 16px; letter-spacing: 2px; border-radius: 2px; }
-  .nav-tabs { display: flex; border-bottom: 1px solid var(--border); padding: 0 32px; overflow-x: auto; gap: 0; }
-  .tab { padding: 14px 24px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; color: var(--muted); border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; background: none; border-top: none; border-left: none; border-right: none; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 4px;
+    color: var(--accent);
+  }
+
+  .tagline {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .day-badge {
+    background: var(--accent);
+    color: var(--black);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    padding: 6px 16px;
+    letter-spacing: 2px;
+    border-radius: 2px;
+  }
+
+  .nav-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    overflow-x: auto;
+    gap: 0;
+  }
+
+  .tab {
+    padding: 14px 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--muted);
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+
   .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
   .tab:hover:not(.active) { color: var(--white); }
+
   main { padding: 32px; max-width: 1100px; margin: 0 auto; }
   .section { display: none; }
   .section.active { display: block; }
-  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 48px; letter-spacing: 3px; margin-bottom: 4px; line-height: 1; }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    letter-spacing: 3px;
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+
   .section-sub { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 24px; margin-bottom: 20px; }
-  .card-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
   .card-title .icon { font-size: 18px; }
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-  @media(max-width: 700px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } main { padding: 20px 16px; } header { padding: 16px; } .nav-tabs { padding: 0 16px; } .section-title { font-size: 36px; } }
-  .stat-block { background: var(--dark); border: 1px solid var(--border); border-radius: 4px; padding: 20px; text-align: center; }
-  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: var(--accent); line-height: 1; }
-  .stat-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-top: 4px; font-family: 'Space Mono', monospace; }
-  .day-row { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+
+  @media(max-width: 700px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    main { padding: 20px 16px; }
+    header { padding: 16px; }
+    .nav-tabs { padding: 0 16px; }
+    .section-title { font-size: 36px; }
+  }
+
+  .stat-block {
+    background: var(--dark);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .day-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
   .day-row:last-child { border-bottom: none; }
-  .day-name { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; width: 110px; flex-shrink: 0; }
+
+  .day-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    width: 110px;
+    flex-shrink: 0;
+  }
+
   .day-type { flex: 1; font-size: 14px; color: var(--white); }
   .day-type.rest { color: var(--muted); font-style: italic; }
-  .day-badge-small { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1px; padding: 3px 10px; border-radius: 2px; text-transform: uppercase; }
+
+  .day-badge-small {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+
   .badge-push { background: rgba(232,255,71,0.15); color: var(--accent); border: 1px solid rgba(232,255,71,0.3); }
   .badge-pull { background: rgba(255,107,53,0.15); color: var(--accent2); border: 1px solid rgba(255,107,53,0.3); }
   .badge-legs { background: rgba(57,211,83,0.15); color: var(--green); border: 1px solid rgba(57,211,83,0.3); }
   .badge-rest { background: rgba(136,136,136,0.1); color: var(--muted); border: 1px solid var(--border); }
+
   table { width: 100%; border-collapse: collapse; font-size: 14px; }
   thead tr { border-bottom: 1px solid var(--accent); }
-  th { padding: 8px 12px; text-align: left; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; font-weight: 400; }
+  th {
+    padding: 8px 12px;
+    text-align: left;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 400;
+  }
   td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
   tr:last-child td { border-bottom: none; }
   .ex-name { font-weight: 500; }
   .ex-detail { color: var(--muted); font-size: 12px; margin-top: 2px; }
-  .sets-badge { background: var(--dark); border: 1px solid var(--border); padding: 2px 8px; border-radius: 2px; font-family: 'Space Mono', monospace; font-size: 11px; white-space: nowrap; }
+  .sets-badge {
+    background: var(--dark);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
   .meal-block { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); }
   .meal-block:last-child { border-bottom: none; }
-  .meal-time { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 1px; color: var(--muted); width: 80px; flex-shrink: 0; padding-top: 2px; }
+  .meal-time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: var(--muted);
+    width: 80px;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
   .meal-content { flex: 1; }
   .meal-name { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
   .meal-items { font-size: 13px; color: var(--muted); line-height: 1.6; }
   .meal-macros { display: flex; gap: 12px; margin-top: 8px; }
-  .macro-pill { font-family: 'Space Mono', monospace; font-size: 10px; padding: 2px 8px; border-radius: 2px; border: 1px solid var(--border); color: var(--muted); }
+  .macro-pill {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
   .macro-pill.p { color: var(--accent2); border-color: rgba(255,107,53,0.4); }
   .macro-pill.c { color: #64b5f6; border-color: rgba(100,181,246,0.4); }
   .macro-pill.f { color: #ce93d8; border-color: rgba(206,147,216,0.4); }
+
   .rule-item { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border); }
   .rule-item:last-child { border-bottom: none; }
-  .rule-num { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--accent); line-height: 1; width: 32px; flex-shrink: 0; }
+  .rule-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--accent);
+    line-height: 1;
+    width: 32px;
+    flex-shrink: 0;
+  }
   .rule-text { font-size: 14px; line-height: 1.6; padding-top: 4px; }
   .rule-text strong { color: var(--white); }
   .rule-text span { color: var(--muted); }
-  .callout { background: rgba(232,255,71,0.06); border: 1px solid rgba(232,255,71,0.25); border-left: 3px solid var(--accent); border-radius: 2px; padding: 16px 20px; margin: 16px 0; font-size: 14px; line-height: 1.6; }
+
+  .callout {
+    background: rgba(232,255,71,0.06);
+    border: 1px solid rgba(232,255,71,0.25);
+    border-left: 3px solid var(--accent);
+    border-radius: 2px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
   .callout strong { color: var(--accent); }
-  .progress-wrap { margin: 8px 0; }
-  .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 5px; font-family: 'Space Mono', monospace; }
+
+  .progrest-wrap { margin: 8px 0; }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 5px;
+    font-family: 'Space Mono', monospace;
+  }
   .progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
   .progress-fill { height: 100%; border-radius: 3px; background: var(--accent); transition: width 1s ease; }
-  .checklist-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); cursor: pointer; font-size: 14px; transition: color 0.2s; }
+
+  .checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
   .checklist-item:last-child { border-bottom: none; }
-  .check-box { width: 20px; height: 20px; border: 2px solid var(--muted); border-radius: 2px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .check-box {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--muted);
+    border-radius: 2px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
   .checklist-item.done .check-box { background: var(--accent); border-color: var(--accent); color: var(--black); font-weight: 700; font-size: 13px; }
   .checklist-item.done .check-label { text-decoration: line-through; color: var(--muted); }
+
   .sep { height: 1px; background: var(--border); margin: 24px 0; }
+
   .highlight-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
-  .hl-chip { background: var(--dark); border: 1px solid var(--border); border-radius: 2px; padding: 8px 16px; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+  .hl-chip {
+    background: var(--dark);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 8px 16px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
   .hl-chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
-  .workout-section-head { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 3px; color: var(--accent2); margin: 20px 0 8px; padding-bottom: 6px; border-bottom: 1px solid rgba(255,107,53,0.3); }
+
+  .workout-section-head {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 3px;
+    color: var(--accent2);
+    margin: 20px 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255,107,53,0.3);
+  }
 </style>
 </head>
 <body>
+
 <header>
-  <div><div class="logo">BUILT</div><div class="tagline">Kevin's Muscle System — 5:45 AM Every Morning</div></div>
+  <div>
+    <div class="logo">BUILT</div>
+    <div class="tagline">Kevin's Muscle System — 5:45 AM Every Morning</div>
+  </div>
   <div class="day-badge" id="currentDay">LOADING...</div>
 </header>
+
 <nav class="nav-tabs">
   <button class="tab active" onclick="showTab('overview', event)">Overview</button>
   <button class="tab" onclick="showTab('schedule', event)">Weekly Schedule</button>
@@ -108,19 +359,26 @@
   <button class="tab" onclick="showTab('daily', event)">Today's Checklist</button>
   <button class="tab" onclick="showTab('rules', event)">The Rules</button>
 </nav>
+
 <main>
+
   <div class="section active" id="overview">
     <div class="section-title">THE SYSTEM</div>
     <div class="section-sub">Simple. Repeatable. Non-negotiable. Your life revolves around this.</div>
+
     <div class="grid-3">
       <div class="stat-block"><div class="stat-num">3500</div><div class="stat-label">Calories / Day</div></div>
-      <div class="stat-block"><div class="stat-num">220g</div><div class="stat-label">Protein / Day</div></div>
+      <div class="stat-block"><div class="stat-num">180g</div><div class="stat-label">Protein / Day</div></div>
       <div class="stat-block"><div class="stat-num">5</div><div class="stat-label">Lift Days / Week</div></div>
     </div>
+
     <div style="height:20px"></div>
+
     <div class="card">
       <div class="card-title"><span class="icon">⚡</span> The Philosophy</div>
-      <div class="callout"><strong>Everything serves the muscle.</strong> Sleep, food, stress management, scheduling — all of it is structured around your training. When the workout is the anchor, everything else aligns. You are not fitting workouts into your life. You are fitting your life around your workouts.</div>
+      <div class="callout">
+        <strong>Everything serves the muscle.</strong> Sleep, food, stress management, scheduling — all of it is structured around your training. When the workout is the anchor, everything else aligns. You are not fitting workouts into your life. You are fitting your life around your workouts.
+      </div>
       <div class="highlight-row">
         <div class="hl-chip"><div class="dot"></div>Train at the same time every day</div>
         <div class="hl-chip"><div class="dot"></div>Eat the same meals every week</div>
@@ -129,17 +387,19 @@
         <div class="hl-chip"><div class="dot"></div>Progressive overload = the only metric</div>
       </div>
     </div>
+
     <div class="grid-2">
       <div class="card">
         <div class="card-title"><span class="icon">🗓</span> Weekly Split</div>
-        <div class="day-row"><div class="day-name">MON</div><div class="day-type">Push — Chest &amp; Shoulders</div><div class="day-badge-small badge-push">PUSH</div></div>
-        <div class="day-row"><div class="day-name">TUE</div><div class="day-type">Pull — Back &amp; Biceps</div><div class="day-badge-small badge-pull">PULL</div></div>
+        <div class="day-row"><div class="day-name">MON</div><div class="day-type">Push — Chest & Shoulders</div><div class="day-badge-small badge-push">PUSH</div></div>
+        <div class="day-row"><div class="day-name">TUE</div><div class="day-type">Pull — Back & Biceps</div><div class="day-badge-small badge-pull">PULL</div></div>
         <div class="day-row"><div class="day-name">WED</div><div class="day-type">Legs — Quads, Hams, Glutes</div><div class="day-badge-small badge-legs">LEGS</div></div>
         <div class="day-row"><div class="day-name">THU</div><div class="day-type rest">Rest + Walk 20 min</div><div class="day-badge-small badge-rest">REST</div></div>
-        <div class="day-row"><div class="day-name">FRI</div><div class="day-type">Push — Chest &amp; Triceps</div><div class="day-badge-small badge-push">PUSH</div></div>
-        <div class="day-row"><div class="day-name">SAT</div><div class="day-type">Pull — Back &amp; Arms</div><div class="day-badge-small badge-pull">PULL</div></div>
+        <div class="day-row"><div class="day-name">FRI</div><div class="day-type">Push — Chest & Triceps</div><div class="day-badge-small badge-push">PUSH</div></div>
+        <div class="day-row"><div class="day-name">SAT</div><div class="day-type">Pull — Back & Arms</div><div class="day-badge-small badge-pull">PULL</div></div>
         <div class="day-row"><div class="day-name">SUN</div><div class="day-type rest">Rest + Meal Prep 2 hrs</div><div class="day-badge-small badge-rest">PREP</div></div>
       </div>
+
       <div class="card">
         <div class="card-title"><span class="icon">🍳</span> Daily Eating Template</div>
         <div class="meal-block"><div class="meal-time">4:45 AM</div><div class="meal-content"><div class="meal-name">Wake-Up Protein</div><div class="meal-items">Shaker of whey + water. Out the door by 5:30.</div></div></div>
@@ -152,15 +412,17 @@
       </div>
     </div>
   </div>
+
   <div class="section" id="schedule">
     <div class="section-title">WEEKLY SCHEDULE</div>
     <div class="section-sub">The exact same week, every week. No decisions needed.</div>
     <div class="callout"><strong>Your anchor time is 5:45 AM.</strong> Build every other habit around it. Wake at 4:45. Whey shake immediately. Train 5:45–7:00. Eat breakfast by 7:30. Lunch at noon. Dinner at 6:30. Bed at 9:30. Repeat forever.</div>
+
     <div class="card">
       <div class="card-title"><span class="icon">📅</span> Monday — Push Day (Chest + Shoulders)</div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">4:45 AM</div><div class="day-type">Alarm — feet on floor. Whey shake + water immediately.</div></div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">5:15 AM</div><div class="day-type">Coffee + drive to gym</div></div>
-      <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">5:45 AM</div><div class="day-type" style="color:var(--accent);font-weight:600">🏋️ TRAIN — Push (Chest &amp; Shoulders)</div></div>
+      <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">5:45 AM</div><div class="day-type" style="color:var(--accent);font-weight:600">🏋️ TRAIN — Push (Chest & Shoulders)</div></div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">7:15 AM</div><div class="day-type">Post-workout breakfast: 5 eggs + oats + banana</div></div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">12:00 PM</div><div class="day-type">Lunch: Rice + chicken breast + broccoli (prepped)</div></div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">3:30 PM</div><div class="day-type">Afternoon shake + rice cakes or fruit</div></div>
@@ -168,11 +430,12 @@
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">9:00 PM</div><div class="day-type">Greek yogurt or casein shake</div></div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">9:30 PM</div><div class="day-type">Screens off. Bed by 9:30.</div></div>
     </div>
+
     <div class="card">
       <div class="card-title"><span class="icon">📅</span> Tuesday — Pull Day (Back + Biceps)</div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">4:45 AM</div><div class="day-type">Alarm — whey shake immediately</div></div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">5:15 AM</div><div class="day-type">Coffee + drive to gym</div></div>
-      <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">5:45 AM</div><div class="day-type" style="color:var(--accent2);font-weight:600">🏋️ TRAIN — Pull (Back &amp; Biceps)</div></div>
+      <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">5:45 AM</div><div class="day-type" style="color:var(--accent2);font-weight:600">🏋️ TRAIN — Pull (Back & Biceps)</div></div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">7:15 AM</div><div class="day-type">Breakfast: Eggs + oats + banana</div></div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">12:00 PM</div><div class="day-type">Lunch: Salmon + sweet potato + spinach (prepped)</div></div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">3:30 PM</div><div class="day-type">Afternoon shake + fruit</div></div>
@@ -180,6 +443,7 @@
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">9:00 PM</div><div class="day-type">Casein or Greek yogurt</div></div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">9:30 PM</div><div class="day-type">Bed</div></div>
     </div>
+
     <div class="card">
       <div class="card-title"><span class="icon">📅</span> Wednesday — Legs</div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">4:45 AM</div><div class="day-type">Alarm — whey shake immediately</div></div>
@@ -189,6 +453,7 @@
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">6:30 PM</div><div class="day-type">Dinner: Steak + potato + salad</div></div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">9:30 PM</div><div class="day-type">Bed</div></div>
     </div>
+
     <div class="card">
       <div class="card-title" style="color:var(--muted)"><span class="icon">😴</span> Thursday — Rest Day</div>
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">Same meals</div><div class="day-type" style="color:var(--muted)">Eat exactly the same. Don't drop calories on rest days — you're still rebuilding.</div></div>
@@ -196,100 +461,128 @@
       <div class="day-row"><div class="day-name" style="font-size:14px;color:var(--muted);width:90px">Sleep extra</div><div class="day-type" style="color:var(--muted)">8–9 hrs. This is when you actually grow.</div></div>
     </div>
   </div>
+
   <div class="section" id="workouts">
     <div class="section-title">THE WORKOUTS</div>
     <div class="section-sub">PPL twice over. 5 days. 60–75 min max. Add weight every week.</div>
     <div class="callout"><strong>The only rule that matters:</strong> Add weight or reps every single session. If you did 185 lbs for 8 reps last Monday, do 190 lbs or 9 reps this Monday. Every week. That's progressive overload. That's how you get massive.</div>
+
     <div class="card">
-      <div class="card-title"><span class="icon">💪</span> Monday — Push A (Chest &amp; Shoulders Focus)</div>
+      <div class="card-title"><span class="icon">💪</span> Monday — Push A (Chest & Shoulders Focus)</div>
       <div class="workout-section-head">COMPOUND FOUNDATION</div>
-      <table><thead><tr><th>Exercise</th><th>Sets × Reps</th><th>Rest</th><th>Notes</th></tr></thead><tbody>
-        <tr><td><div class="ex-name">Barbell Bench Press</div><div class="ex-detail">Flat — main strength lift</div></td><td><span class="sets-badge">4 × 5–6</span></td><td>3 min</td><td>Heavy. Track weight every week.</td></tr>
-        <tr><td><div class="ex-name">Incline DB Press</div><div class="ex-detail">30–45° angle</div></td><td><span class="sets-badge">4 × 8–10</span></td><td>90 sec</td><td>Upper chest focus</td></tr>
-        <tr><td><div class="ex-name">Seated DB Shoulder Press</div></td><td><span class="sets-badge">3 × 8–10</span></td><td>90 sec</td><td>Controlled descent</td></tr>
-      </tbody></table>
+      <table>
+        <thead><tr><th>Exercise</th><th>Sets × Reps</th><th>Rest</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><div class="ex-name">Barbell Bench Press</div><div class="ex-detail">Flat — main strength lift</div></td><td><span class="sets-badge">4 × 5–6</span></td><td>3 min</td><td>Heavy. Track weight every week.</td></tr>
+          <tr><td><div class="ex-name">Incline DB Press</div><div class="ex-detail">30–45° angle</div></td><td><span class="sets-badge">4 × 8–10</span></td><td>90 sec</td><td>Upper chest focus</td></tr>
+          <tr><td><div class="ex-name">Seated DB Shoulder Press</div></td><td><span class="sets-badge">3 × 8–10</span></td><td>90 sec</td><td>Controlled descent</td></tr>
+        </tbody>
+      </table>
       <div class="workout-section-head">ISOLATION / VOLUME</div>
-      <table><tbody>
-        <tr><td><div class="ex-name">Cable Lateral Raises</div></td><td><span class="sets-badge">4 × 12–15</span></td><td>60 sec</td><td>Slow &amp; controlled</td></tr>
-        <tr><td><div class="ex-name">Cable Chest Flyes</div></td><td><span class="sets-badge">3 × 12–15</span></td><td>60 sec</td><td>Full stretch at bottom</td></tr>
-        <tr><td><div class="ex-name">Tricep Pushdowns (Rope)</div></td><td><span class="sets-badge">3 × 12–15</span></td><td>60 sec</td><td>Squeeze at bottom</td></tr>
-        <tr><td><div class="ex-name">Overhead Tricep Extension</div></td><td><span class="sets-badge">3 × 10–12</span></td><td>60 sec</td><td>Full range</td></tr>
-      </tbody></table>
+      <table>
+        <tbody>
+          <tr><td><div class="ex-name">Cable Lateral Raises</div></td><td><span class="sets-badge">4 × 12–15</span></td><td>60 sec</td><td>Slow & controlled</td></tr>
+          <tr><td><div class="ex-name">Cable Chest Flyes</div></td><td><span class="sets-badge">3 × 12–15</span></td><td>60 sec</td><td>Full stretch at bottom</td></tr>
+          <tr><td><div class="ex-name">Tricep Pushdowns (Rope)</div></td><td><span class="sets-badge">3 × 12–15</span></td><td>60 sec</td><td>Squeeze at bottom</td></tr>
+          <tr><td><div class="ex-name">Overhead Tricep Extension</div></td><td><span class="sets-badge">3 × 10–12</span></td><td>60 sec</td><td>Full range</td></tr>
+        </tbody>
+      </table>
     </div>
+
     <div class="card">
-      <div class="card-title" style="color:var(--accent2)"><span class="icon">🦾</span> Tuesday — Pull A (Back &amp; Biceps Focus)</div>
+      <div class="card-title" style="color:var(--accent2)"><span class="icon">🦾</span> Tuesday — Pull A (Back & Biceps Focus)</div>
       <div class="workout-section-head">COMPOUND FOUNDATION</div>
-      <table><tbody>
-        <tr><td><div class="ex-name">Weighted Pull-Ups</div><div class="ex-detail">Or lat pulldown if needed</div></td><td><span class="sets-badge">4 × 6–8</span></td><td>3 min</td><td>Add weight belt when 8 reps is easy</td></tr>
-        <tr><td><div class="ex-name">Barbell Rows</div><div class="ex-detail">Pendlay or bent-over</div></td><td><span class="sets-badge">4 × 6–8</span></td><td>2 min</td><td>Pull to belly button</td></tr>
-        <tr><td><div class="ex-name">Seated Cable Row</div></td><td><span class="sets-badge">3 × 10–12</span></td><td>90 sec</td><td>Retract scapula</td></tr>
-      </tbody></table>
+      <table>
+        <tbody>
+          <tr><td><div class="ex-name">Weighted Pull-Ups</div><div class="ex-detail">Or lat pulldown if needed</div></td><td><span class="sets-badge">4 × 6–8</span></td><td>3 min</td><td>Add weight belt when 8 reps is easy</td></tr>
+          <tr><td><div class="ex-name">Barbell Rows</div><div class="ex-detail">Pendlay or bent-over</div></td><td><span class="sets-badge">4 × 6–8</span></td><td>2 min</td><td>Pull to belly button</td></tr>
+          <tr><td><div class="ex-name">Seated Cable Row</div></td><td><span class="sets-badge">3 × 10–12</span></td><td>90 sec</td><td>Retract scapula</td></tr>
+        </tbody>
+      </table>
       <div class="workout-section-head">ISOLATION / VOLUME</div>
-      <table><tbody>
-        <tr><td><div class="ex-name">Single-Arm DB Row</div></td><td><span class="sets-badge">3 × 10–12</span></td><td>60 sec</td><td>Full stretch &amp; squeeze</td></tr>
-        <tr><td><div class="ex-name">Barbell Curls</div></td><td><span class="sets-badge">4 × 8–10</span></td><td>90 sec</td><td>No swinging</td></tr>
-        <tr><td><div class="ex-name">Hammer Curls</div></td><td><span class="sets-badge">3 × 10–12</span></td><td>60 sec</td><td>Brachialis builder</td></tr>
-        <tr><td><div class="ex-name">Face Pulls</div></td><td><span class="sets-badge">3 × 15</span></td><td>60 sec</td><td>Rear delt health</td></tr>
-      </tbody></table>
+      <table>
+        <tbody>
+          <tr><td><div class="ex-name">Single-Arm DB Row</div></td><td><span class="sets-badge">3 × 10–12</span></td><td>60 sec</td><td>Full stretch & squeeze</td></tr>
+          <tr><td><div class="ex-name">Barbell Curls</div></td><td><span class="sets-badge">4 × 8–10</span></td><td>90 sec</td><td>No swinging</td></tr>
+          <tr><td><div class="ex-name">Hammer Curls</div></td><td><span class="sets-badge">3 × 10–12</span></td><td>60 sec</td><td>Brachialis builder</td></tr>
+          <tr><td><div class="ex-name">Face Pulls</div></td><td><span class="sets-badge">3 × 15</span></td><td>60 sec</td><td>Rear delt health</td></tr>
+        </tbody>
+      </table>
     </div>
+
     <div class="card">
       <div class="card-title" style="color:var(--green)"><span class="icon">🦵</span> Wednesday — Legs (Quads, Hams, Glutes)</div>
       <div class="workout-section-head">COMPOUND FOUNDATION</div>
-      <table><tbody>
-        <tr><td><div class="ex-name">Barbell Back Squat</div><div class="ex-detail">The king. No substitutions.</div></td><td><span class="sets-badge">4 × 5–6</span></td><td>3 min</td><td>ATG if mobility allows</td></tr>
-        <tr><td><div class="ex-name">Romanian Deadlift</div></td><td><span class="sets-badge">4 × 8–10</span></td><td>2 min</td><td>Hinge hard, feel hamstrings</td></tr>
-        <tr><td><div class="ex-name">Leg Press</div></td><td><span class="sets-badge">3 × 10–12</span></td><td>90 sec</td><td>Feet high for glutes/hams</td></tr>
-      </tbody></table>
+      <table>
+        <tbody>
+          <tr><td><div class="ex-name">Barbell Back Squat</div><div class="ex-detail">The king. No substitutions.</div></td><td><span class="sets-badge">4 × 5–6</span></td><td>3 min</td><td>ATG if mobility allows</td></tr>
+          <tr><td><div class="ex-name">Romanian Deadlift</div></td><td><span class="sets-badge">4 × 8–10</span></td><td>2 min</td><td>Hinge hard, feel hamstrings</td></tr>
+          <tr><td><div class="ex-name">Leg Press</div></td><td><span class="sets-badge">3 × 10–12</span></td><td>90 sec</td><td>Feet high for glutes/hams</td></tr>
+        </tbody>
+      </table>
       <div class="workout-section-head">ISOLATION / VOLUME</div>
-      <table><tbody>
-        <tr><td><div class="ex-name">Leg Extension</div></td><td><span class="sets-badge">3 × 12–15</span></td><td>60 sec</td><td>Squeeze at top</td></tr>
-        <tr><td><div class="ex-name">Leg Curl (Machine)</div></td><td><span class="sets-badge">3 × 12–15</span></td><td>60 sec</td><td>Slow eccentric</td></tr>
-        <tr><td><div class="ex-name">Standing Calf Raises</div></td><td><span class="sets-badge">4 × 15–20</span></td><td>60 sec</td><td>Full range, pause at top</td></tr>
-      </tbody></table>
+      <table>
+        <tbody>
+          <tr><td><div class="ex-name">Leg Extension</div></td><td><span class="sets-badge">3 × 12–15</span></td><td>60 sec</td><td>Squeeze at top</td></tr>
+          <tr><td><div class="ex-name">Leg Curl (Machine)</div></td><td><span class="sets-badge">3 × 12–15</span></td><td>60 sec</td><td>Slow eccentric</td></tr>
+          <tr><td><div class="ex-name">Standing Calf Raises</div></td><td><span class="sets-badge">4 × 15–20</span></td><td>60 sec</td><td>Full range, pause at top</td></tr>
+        </tbody>
+      </table>
     </div>
+
     <div class="card">
-      <div class="card-title"><span class="icon">💪</span> Friday — Push B (Chest &amp; Triceps Focus)</div>
-      <table><tbody>
-        <tr><td><div class="ex-name">Incline Barbell Press</div></td><td><span class="sets-badge">4 × 6–8</span></td><td>2.5 min</td><td>Upper chest builder</td></tr>
-        <tr><td><div class="ex-name">Flat DB Press</div></td><td><span class="sets-badge">4 × 8–10</span></td><td>90 sec</td><td>Deeper stretch than bar</td></tr>
-        <tr><td><div class="ex-name">Machine Chest Press</div></td><td><span class="sets-badge">3 × 12</span></td><td>75 sec</td><td>Constant tension</td></tr>
-        <tr><td><div class="ex-name">Lateral Raises (Dumbbells)</div></td><td><span class="sets-badge">4 × 15</span></td><td>60 sec</td><td>Slight bend in elbow</td></tr>
-        <tr><td><div class="ex-name">Close Grip Bench Press</div></td><td><span class="sets-badge">3 × 8–10</span></td><td>90 sec</td><td>Tricep mass builder</td></tr>
-        <tr><td><div class="ex-name">Skull Crushers</div></td><td><span class="sets-badge">3 × 10–12</span></td><td>75 sec</td><td>EZ bar</td></tr>
-        <tr><td><div class="ex-name">Cable Lateral Raises</div></td><td><span class="sets-badge">3 × 15</span></td><td>60 sec</td><td>Finisher</td></tr>
-      </tbody></table>
+      <div class="card-title"><span class="icon">💪</span> Friday — Push B (Chest & Triceps Focus)</div>
+      <table>
+        <tbody>
+          <tr><td><div class="ex-name">Incline Barbell Press</div></td><td><span class="sets-badge">4 × 6–8</span></td><td>2.5 min</td><td>Upper chest builder</td></tr>
+          <tr><td><div class="ex-name">Flat DB Press</div></td><td><span class="sets-badge">4 × 8–10</span></td><td>90 sec</td><td>Deeper stretch than bar</td></tr>
+          <tr><td><div class="ex-name">Machine Chest Press</div></td><td><span class="sets-badge">3 × 12</span></td><td>75 sec</td><td>Constant tension</td></tr>
+          <tr><td><div class="ex-name">Lateral Raises (Dumbbells)</div></td><td><span class="sets-badge">4 × 15</span></td><td>60 sec</td><td>Slight bend in elbow</td></tr>
+          <tr><td><div class="ex-name">Close Grip Bench Press</div></td><td><span class="sets-badge">3 × 8–10</span></td><td>90 sec</td><td>Tricep mass builder</td></tr>
+          <tr><td><div class="ex-name">Skull Crushers</div></td><td><span class="sets-badge">3 × 10–12</span></td><td>75 sec</td><td>EZ bar</td></tr>
+          <tr><td><div class="ex-name">Cable Lateral Raises</div></td><td><span class="sets-badge">3 × 15</span></td><td>60 sec</td><td>Finisher</td></tr>
+        </tbody>
+      </table>
     </div>
+
     <div class="card">
       <div class="card-title" style="color:var(--accent2)"><span class="icon">🦾</span> Saturday — Pull B (Back Width + Arms)</div>
-      <table><tbody>
-        <tr><td><div class="ex-name">Lat Pulldown (Wide Grip)</div></td><td><span class="sets-badge">4 × 8–10</span></td><td>90 sec</td><td>V-taper builder</td></tr>
-        <tr><td><div class="ex-name">T-Bar Row or Machine Row</div></td><td><span class="sets-badge">4 × 8–10</span></td><td>90 sec</td><td>Thickness</td></tr>
-        <tr><td><div class="ex-name">Straight-Arm Pulldown</div></td><td><span class="sets-badge">3 × 12</span></td><td>75 sec</td><td>Lat isolation</td></tr>
-        <tr><td><div class="ex-name">Incline DB Curl</div></td><td><span class="sets-badge">4 × 10–12</span></td><td>75 sec</td><td>Stretch at bottom</td></tr>
-        <tr><td><div class="ex-name">Cable Curl (Rope)</div></td><td><span class="sets-badge">3 × 12–15</span></td><td>60 sec</td><td>Constant tension</td></tr>
-        <tr><td><div class="ex-name">Rear Delt Flyes</div></td><td><span class="sets-badge">3 × 15</span></td><td>60 sec</td><td>Posture &amp; balance</td></tr>
-        <tr><td><div class="ex-name">Forearm Curls / Wrist Roller</div></td><td><span class="sets-badge">2 × 15–20</span></td><td>60 sec</td><td>Finisher</td></tr>
-      </tbody></table>
+      <table>
+        <tbody>
+          <tr><td><div class="ex-name">Lat Pulldown (Wide Grip)</div></td><td><span class="sets-badge">4 × 8–10</span></td><td>90 sec</td><td>V-taper builder</td></tr>
+          <tr><td><div class="ex-name">T-Bar Row or Machine Row</div></td><td><span class="sets-badge">4 × 8–10</span></td><td>90 sec</td><td>Thickness</td></tr>
+          <tr><td><div class="ex-name">Straight-Arm Pulldown</div></td><td><span class="sets-badge">3 × 12</span></td><td>75 sec</td><td>Lat isolation</td></tr>
+          <tr><td><div class="ex-name">Incline DB Curl</div></td><td><span class="sets-badge">4 × 10–12</span></td><td>75 sec</td><td>Stretch at bottom</td></tr>
+          <tr><td><div class="ex-name">Cable Curl (Rope)</div></td><td><span class="sets-badge">3 × 12–15</span></td><td>60 sec</td><td>Constant tension</td></tr>
+          <tr><td><div class="ex-name">Rear Delt Flyes</div></td><td><span class="sets-badge">3 × 15</span></td><td>60 sec</td><td>Posture & balance</td></tr>
+          <tr><td><div class="ex-name">Forearm Curls / Wrist Roller</div></td><td><span class="sets-badge">2 × 15–20</span></td><td>60 sec</td><td>Finisher</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
+
   <div class="section" id="nutrition">
     <div class="section-title">NUTRITION</div>
     <div class="section-sub">Same meals, every week. Meal prep Sunday. Zero decisions during the week.</div>
+
     <div class="grid-3">
       <div class="stat-block"><div class="stat-num">3500</div><div class="stat-label">Total Calories</div></div>
-      <div class="stat-block"><div class="stat-num">220g</div><div class="stat-label">Protein (~1g/lb)</div></div>
+      <div class="stat-block"><div class="stat-num">180g</div><div class="stat-label">Protein (~1g/lb)</div></div>
       <div class="stat-block"><div class="stat-num">400g</div><div class="stat-label">Carbs (energy)</div></div>
     </div>
+
     <div style="height:20px"></div>
+
     <div class="card">
       <div class="card-title"><span class="icon">🍳</span> Full Daily Meal Plan</div>
       <div class="meal-block"><div class="meal-time">4:45 AM</div><div class="meal-content"><div class="meal-name">Wake-Up Protein Shake</div><div class="meal-items">40g whey protein + 16oz water.</div><div class="meal-macros"><span class="macro-pill p">P: 40g</span><span class="macro-pill c">C: 3g</span><span class="macro-pill f">F: 2g</span></div></div></div>
-      <div class="meal-block"><div class="meal-time">7:30 AM</div><div class="meal-content"><div class="meal-name">Post-Workout Breakfast</div><div class="meal-items">5 whole eggs + 1 cup dry oats + 1 banana + black coffee.</div><div class="meal-macros"><span class="macro-pill p">P: 38g</span><span class="macro-pill c">C: 85g</span><span class="macro-pill f">F: 22g</span></div></div></div>
-      <div class="meal-block"><div class="meal-time">12:00 PM</div><div class="meal-content"><div class="meal-name">Lunch (Prepped Sunday)</div><div class="meal-items">8oz chicken breast + 2 cups cooked white rice + 1 cup broccoli + olive oil</div><div class="meal-macros"><span class="macro-pill p">P: 60g</span><span class="macro-pill c">C: 90g</span><span class="macro-pill f">F: 8g</span></div></div></div>
-      <div class="meal-block"><div class="meal-time">3:30 PM</div><div class="meal-content"><div class="meal-name">Afternoon Shake + Snack</div><div class="meal-items">40g whey + 4 rice cakes with peanut butter + 1 apple</div><div class="meal-macros"><span class="macro-pill p">P: 45g</span><span class="macro-pill c">C: 60g</span><span class="macro-pill f">F: 10g</span></div></div></div>
-      <div class="meal-block"><div class="meal-time">6:30 PM</div><div class="meal-content"><div class="meal-name">Dinner</div><div class="meal-items">8oz ground beef 93% lean OR ribeye + 2 cups white rice + large salad</div><div class="meal-macros"><span class="macro-pill p">P: 55g</span><span class="macro-pill c">C: 100g</span><span class="macro-pill f">F: 20g</span></div></div></div>
-      <div class="meal-block"><div class="meal-time">9:00 PM</div><div class="meal-content"><div class="meal-name">Before-Bed Protein</div><div class="meal-items">1.5 cups Greek yogurt (full fat) + honey</div><div class="meal-macros"><span class="macro-pill p">P: 30g</span><span class="macro-pill c">C: 20g</span><span class="macro-pill f">F: 8g</span></div></div></div>
+      <div class="meal-block"><div class="meal-time">7:30 AM</div><div class="meal-content"><div class="meal-name">Post-Workout Breakfast</div><div class="meal-items">5 whole eggs + 1 cup dry oats + 1 banana + black coffee.</div><div class="meal-macros"><span class="macro-pill p">P: 35g</span><span class="macro-pill c">C: 85g</span><span class="macro-pill f">F: 22g</span></div></div></div>
+      <div class="meal-block"><div class="meal-time">12:00 PM</div><div class="meal-content"><div class="meal-name">Lunch (Prepped Sunday)</div><div class="meal-items">6oz chicken breast + 2 cups cooked white rice + 1 cup broccoli + olive oil</div><div class="meal-macros"><span class="macro-pill p">P: 45g</span><span class="macro-pill c">C: 90g</span><span class="macro-pill f">F: 8g</span></div></div></div>
+      <div class="meal-block"><div class="meal-time">3:30 PM</div><div class="meal-content"><div class="meal-name">Afternoon Shake + Snack</div><div class="meal-items">40g whey + 4 rice cakes with peanut butter + 1 apple</div><div class="meal-macros"><span class="macro-pill p">P: 35g</span><span class="macro-pill c">C: 60g</span><span class="macro-pill f">F: 10g</span></div></div></div>
+      <div class="meal-block"><div class="meal-time">6:30 PM</div><div class="meal-content"><div class="meal-name">Dinner</div><div class="meal-items">8oz ground beef 93% lean OR ribeye + 2 cups white rice + large salad</div><div class="meal-macros"><span class="macro-pill p">P: 40g</span><span class="macro-pill c">C: 100g</span><span class="macro-pill f">F: 20g</span></div></div></div>
+      <div class="meal-block"><div class="meal-time">9:00 PM</div><div class="meal-content"><div class="meal-name">Before-Bed Protein</div><div class="meal-items">1.5 cups Greek yogurt (full fat) + honey</div><div class="meal-macros"><span class="macro-pill p">P: 25g</span><span class="macro-pill c">C: 20g</span><span class="macro-pill f">F: 8g</span></div></div></div>
     </div>
+
     <div class="card">
       <div class="card-title"><span class="icon">💊</span> Supplements</div>
       <div class="highlight-row">
@@ -302,9 +595,11 @@
       </div>
     </div>
   </div>
+
   <div class="section" id="daily">
     <div class="section-title">TODAY'S CHECKLIST</div>
     <div class="section-sub">Tap each item as you complete it.</div>
+
     <div class="card">
       <div class="card-title"><span class="icon">🌅</span> Morning (4:45 – 7:30 AM)</div>
       <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">4:45 AM alarm — feet on floor within 2 minutes. No snooze.</div></div>
@@ -316,12 +611,14 @@
       <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">7:30 AM: Post-workout breakfast — 5 eggs + oats + banana</div></div>
       <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">Take creatine + vitamin D + fish oil with breakfast</div></div>
     </div>
+
     <div class="card">
       <div class="card-title"><span class="icon">☀️</span> Midday</div>
       <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">Lunch from meal prep container</div></div>
       <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">32oz water by noon</div></div>
       <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">3:30 PM: Afternoon shake + rice cakes</div></div>
     </div>
+
     <div class="card">
       <div class="card-title"><span class="icon">🌙</span> Evening</div>
       <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">6:30 PM: Dinner — protein + carbs + salad</div></div>
@@ -330,19 +627,22 @@
       <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">Screens off by 9:00 PM</div></div>
       <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">In bed by 9:30 PM</div></div>
     </div>
+
     <div id="completion-banner" style="display:none;background:var(--accent);color:var(--black);padding:20px;border-radius:4px;text-align:center;margin-top:12px">
       <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:3px">PERFECT DAY ✓</div>
       <div style="font-size:14px;margin-top:4px">You did everything. That's what champions do.</div>
     </div>
   </div>
+
   <div class="section" id="rules">
     <div class="section-title">THE RULES</div>
     <div class="section-sub">Non-negotiable. Burn these into memory.</div>
+
     <div class="card">
       <div class="card-title"><span class="icon">⚖️</span> The 10 Laws</div>
       <div class="rule-item"><div class="rule-num">1</div><div class="rule-text"><strong>Never miss Monday.</strong> <span>Push day anchors the week.</span></div></div>
       <div class="rule-item"><div class="rule-num">2</div><div class="rule-text"><strong>Track your lifts every session.</strong> <span>If you don't track, you don't progress.</span></div></div>
-      <div class="rule-item"><div class="rule-num">3</div><div class="rule-text"><strong>Hit 220g protein every single day.</strong> <span>Muscle is built in the kitchen.</span></div></div>
+      <div class="rule-item"><div class="rule-num">3</div><div class="rule-text"><strong>Hit 180g protein every single day.</strong> <span>Muscle is built in the kitchen.</span></div></div>
       <div class="rule-item"><div class="rule-num">4</div><div class="rule-text"><strong>Sleep 8 hours. Non-negotiable.</strong> <span>Growth hormone releases during deep sleep.</span></div></div>
       <div class="rule-item"><div class="rule-num">5</div><div class="rule-text"><strong>Prep your meals Sunday. No exceptions.</strong> <span>2 hours Sunday = a perfect week of eating.</span></div></div>
       <div class="rule-item"><div class="rule-num">6</div><div class="rule-text"><strong>Add weight or reps every week.</strong> <span>Progressive overload is the entire game.</span></div></div>
@@ -351,31 +651,53 @@
       <div class="rule-item"><div class="rule-num">9</div><div class="rule-text"><strong>Don't change the plan for 12 weeks.</strong> <span>Program hopping kills progress.</span></div></div>
       <div class="rule-item"><div class="rule-num">10</div><div class="rule-text"><strong>Your workout is a meeting you never cancel.</strong> <span>You show up. Always.</span></div></div>
     </div>
+
     <div class="card">
       <div class="card-title"><span class="icon">📊</span> Progress Checkpoints</div>
-      <div style="margin-bottom:20px"><div class="progress-wrap"><div class="progress-label"><span>WEEK 1–4: Foundation</span><span>Build the habit</span></div><div class="progress-bar"><div class="progress-fill" style="width:25%;background:var(--accent2)"></div></div></div></div>
+      <div style="margin-bottom:20px">
+        <div class="progress-wrap">
+          <div class="progress-label"><span>WEEK 1–4: Foundation</span><span>Build the habit</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:25%;background:var(--accent2)"></div></div>
+        </div>
+      </div>
       <div class="sep"></div>
-      <div style="margin-bottom:20px"><div class="progress-wrap"><div class="progress-label"><span>WEEK 5–8: Load</span><span>Push the weights</span></div><div class="progress-bar"><div class="progress-fill" style="width:50%;background:var(--accent)"></div></div></div></div>
+      <div style="margin-bottom:20px">
+        <div class="progress-wrap">
+          <div class="progress-label"><span>WEEK 5–8: Load</span><span>Push the weights</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:50%;background:var(--accent)"></div></div>
+        </div>
+      </div>
       <div class="sep"></div>
-      <div><div class="progress-wrap"><div class="progress-label"><span>WEEK 9–12: Growth</span><span>Body transformation</span></div><div class="progress-bar"><div class="progress-fill" style="width:75%;background:var(--green)"></div></div></div></div>
+      <div>
+        <div class="progress-wrap">
+          <div class="progress-label"><span>WEEK 9–12: Growth</span><span>Body transformation</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:75%;background:var(--green)"></div></div>
+        </div>
+      </div>
     </div>
+
     <div class="callout"><strong>After 12 weeks:</strong> Take progress photos. Reassess. Potentially run a 4-week cut to reveal the mass. Then repeat the bulk cycle.</div>
   </div>
+
 </main>
+
 <script>
   const days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
   document.getElementById('currentDay').textContent = days[new Date().getDay()];
+
   function showTab(id, event) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     event.target.classList.add('active');
   }
+
   function toggleCheck(el) {
     el.classList.toggle('done');
     el.querySelector('.check-box').textContent = el.classList.contains('done') ? '✓' : '';
     checkCompletion();
   }
+
   function checkCompletion() {
     const all = document.querySelectorAll('.checklist-item');
     const done = document.querySelectorAll('.checklist-item.done');
